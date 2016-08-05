@@ -1,0 +1,12 @@
+{% extends 'mark_lympics/base.html' %}
+
+{% block content %}
+    <form method="POST" class="post-form">
+        {% csrf_token %}
+        {{ form.as_p}}
+
+        <div class="form-group">
+            <button type="submit" class="save btn btn-primary">Registrar</button>
+        </div>
+    </form>
+{% endblock content %}

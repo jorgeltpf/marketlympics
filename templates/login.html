@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    {% if form.errors %}
+
+<p>Seu username e password não coincidem. Por favor tente novamente.</p>
+{% endif %}
+
+{% if next %}
+    {% if user.is_authenticated %}
+
+<p>Sua conta não possui acesso a essa página. Por favor faça o login para poder
+    acessar.</p>
+    {% else %}
+
+<p>Please login to see this page.</p>
+    {% endif %}
+{% endif %}
+
+<!-- Header -->
+<header id="top" class="header">
+    <div class="text-vertical-center">
+        <h1>MarketLympcs</h1>
+        <h3>Comparador de &amp; Preços</h3>
+        <hr>
+        <div class="tab-content">
+            <div id="login" class="tab-pane active col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                <form class="form-horizontal" role="form" method="post" action="#">
+                    {% csrf_token %}
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <div class="panel-title font-title">Login</div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <div class="input-group col-md-8 col-md-offset-2">
+                                    {{ form.username.label_tag }}
+                                    {{ form.username }}
+                                </div>
+                                <div class="input-group col-md-8 col-md-offset-2">
+                                    {{ form.password.label_tag }}
+                                    {{ form.password }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group"> <!-- Submit button !-->
+                            <button type="submit" class="btn btn-primary">Entrar</button>
+                        </div>
+                    </div>
+                    <input type="hidden" name="next" value="{{ next }}" />
+                </form>
+            </div>
+            <div id="forgot" class="tab-pane col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                <form action="index.html">
+                    {% csrf_token %}
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <div class="panel-title font-title">Recuperar Senha</div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <div class="input-group col-md-8 col-md-offset-2">
+                                    <label for="pass" class="control-label">Senha:</label>
+                                    <!-- <input type="password" class="form-control" id="pass" placeholder="Password" required> -->
+
+                                    <input type="email" placeholder="mail@domain.com" class="form-control" required>
+                                    <!-- <br> -->
+                                    <!-- <button class="btn btn-lg btn-danger btn-block" type="submit">Recover Password</button> -->
+                                    <div class="form-group"> <!-- Submit button !-->
+                                        <button type="submit" class="btn btn-danger btn-block">Recuperar Senha</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div id="signup" class="tab-pane col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                <form action="index.html">
+                    {% csrf_token %}
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <div class="panel-title font-title">Registrar</div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <div class="input-group col-md-8 col-md-offset-2">
+                                    <input type="text" placeholder="username" class="form-control top">
+                                    <input type="email" placeholder="mail@domain.com" class="form-control middle">
+                                    <input type="password" placeholder="password" class="form-control middle">
+                                    <input type="password" placeholder="re-password" class="form-control bottom">
+                                    <button class="btn btn-lg btn-success btn-block" type="submit">Register</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <hr>
+        <div class="text-center">
+            <ul class="list-inline">
+                <li><a class="text-muted" href="#login" data-toggle="tab">Login</a></li>
+                <li><a class="text-muted" href="#forgot" data-toggle="tab">Forgot Password</a></li>
+                <li><a class="text-muted" href="#signup" data-toggle="tab">Signup</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+{% endblock %}
+
+{% block javascript %}
+
+<script type="text/javascript">
+{% if not user.is_authenticated %}
+    $("ul.nav.navbar-nav.navbar-right").css("display","none");
+{% endif %}
+
+(function($) {
+    $(document).ready(function() {
+        $('.list-inline li > a').click(function() {
+            var activeForm = $(this).attr('href') + ' > form';
+            //console.log(activeForm);
+            $(activeForm).addClass('animated fadeIn');
+            //set timer to 1 seconds, after that, unload the animate animation
+            setTimeout(function() {
+                $(activeForm).removeClass('animated fadeIn');
+            }, 1000);
+        });
+    });
+})(jQuery);
+
+</script>
+
+{% endblock %}

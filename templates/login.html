@@ -3,17 +3,13 @@
 
 {% block content %}
     {% if form.errors %}
-
-<p>Seu username e senha não coincidem. Por favor tente novamente.</p>
-{% endif %}
-
-{% if next %}
-    {% if user.is_authenticated %}
-
-<p>Sua conta não possui acesso a essa página. Por favor faça o login para poder
-    acessar.</p>
-
+    <p>Seu username e senha não coincidem. Por favor tente novamente.</p>
     {% endif %}
+
+    {% if next %}
+        {% if user.is_authenticated %}
+        <p>Sua conta não possui acesso a essa página. Por favor faça o login para poder acessar.</p>
+        {% endif %}
 {% endif %}
 
 
@@ -44,6 +40,7 @@
             <input type="hidden" name="next" value="{{ next }}" />
         </form>
     </div>
+
     <div id="forgot" class="tab-pane col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
         <form action="home.html">
             {% csrf_token %}
@@ -108,7 +105,6 @@
 {% if not user.is_authenticated %}
     $("ul.nav.navbar-nav.navbar-right").css("display","none");
 {% endif %}
-
 (function($) {
     $(document).ready(function() {
         $('.list-inline li > a').click(function() {
@@ -122,7 +118,6 @@
         });
     });
 })(jQuery);
-
 </script>
 
 {% endblock %}

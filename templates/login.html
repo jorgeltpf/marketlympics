@@ -19,7 +19,7 @@
 
 <div class="tab-content">
     <div id="login" class="tab-pane active col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-        <form class="form-horizontal" role="form" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+        <form class="form-horizontal" role="form" method="post" action="{% url 'login' %}">
             {% csrf_token %}
             <div class="panel panel-info">
                 <div class="panel-heading">
